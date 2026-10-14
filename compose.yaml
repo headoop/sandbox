@@ -1,0 +1,116 @@
+name: ${SANDBOX_NAME:-sandbox}
+
+services:
+  sandbox:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      args:
+        TZ: ${TZ:-Europe/Berlin}
+        USER_UID: ${SANDBOX_UID:-1000}
+        USER_GID: ${SANDBOX_GID:-1000}
+        INSTALL_NODE: ${INSTALL_NODE:-true}
+        NODE_MAJOR: ${NODE_MAJOR:-22}
+        INSTALL_PYTHON: ${INSTALL_PYTHON:-true}
+        INSTALL_GO: ${INSTALL_GO:-true}
+        GO_VERSION: ${GO_VERSION:-}
+        INSTALL_RUST: ${INSTALL_RUST:-false}
+        ENABLE_SUDO: ${ENABLE_SUDO:-true}
+        INSTALL_OPENCODE: ${INSTALL_OPENCODE:-true}
+        OPENCODE_VERSION: ${OPENCODE_VERSION:-}
+        INSTALL_CLAUDE: ${INSTALL_CLAUDE:-true}
+        CLAUDE_CODE_VERSION: ${CLAUDE_CODE_VERSION:-}
+        GITHUB_MCP_VERSION: ${GITHUB_MCP_VERSION:-latest}
+        EXTRA_APT_PACKAGES: ${EXTRA_APT_PACKAGES:-}
+    image: ${SANDBOX_IMAGE:-sandbox-opencode:local}
+    container_name: ${SANDBOX_NAME:-sandbox}
+    hostname: ${SANDBOX_NAME:-sandbox}
+
+    # Container laeuft im Hintergrund, ./sandbox.sh klinkt sich per exec ein
+    command: ["sleep", "infinity"]
+    init: true
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    working_dir: /work
+
+    environment:
+      TZ: ${TZ:-Europe/Berlin}
+      TERM: xterm-256color
+      COLORTERM: truecolor
+      # Anthropic: fuer opencode und die Claude CLI. Leer lassen, wenn die
+      # Anmeldung stattdessen ueber das Abo laufen soll.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # Die CLIs liegen in /usr/local und koennen sich nicht selbst aktualisieren
+      DISABLE_AUTOUPDATER: ${DISABLE_AUTOUPDATER:-1}
+      # Vorlagen aus config/ bei jedem Start ueberschreiben (1) oder nur
+      # anlegen, wenn noch nichts da ist (0)
+      SEED_OVERWRITE: ${SEED_OVERWRITE:-0}
+      # Git-Identitaet im Container
+      GIT_USER_NAME: ${GIT_USER_NAME:-}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-}
+      GIT_DEFAULT_BRANCH: ${GIT_DEFAULT_BRANCH:-main}
+      # GitHub: ein Token fuer gh, git und den MCP-Server
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${GITHUB_PERSONAL_ACCESS_TOKEN:-}
+      GH_TOKEN: ${GITHUB_PERSONAL_ACCESS_TOKEN:-}
+      GH_HOST: ${GH_HOST:-github.com}
+      GITHUB_TOOLSETS: ${GITHUB_TOOLSETS:-context,repos,issues,pull_requests,labels,users,projects}
+      GITHUB_READ_ONLY: ${GITHUB_READ_ONLY:-}
+      # Vorgaben fuer /plan-item und /implement-item
+      GITHUB_PROJECT_OWNER: ${GITHUB_PROJECT_OWNER:-}
+      GITHUB_PROJECT_NUMBER: ${GITHUB_PROJECT_NUMBER:-}
+      GITHUB_PROJECT_STATUS_FIELD: ${GITHUB_PROJECT_STATUS_FIELD:-Status}
+      GITHUB_STATUS_PLANNED: ${GITHUB_STATUS_PLANNED:-Ready}
+      GITHUB_STATUS_IN_PROGRESS: ${GITHUB_STATUS_IN_PROGRESS:-In Progress}
+      GITHUB_STATUS_IN_REVIEW: ${GITHUB_STATUS_IN_REVIEW:-In Review}
+
+    volumes:
+      # Projekte: liegen auf dem Mac, sichtbar im Container unter /work
+      - ${WORKSPACE_DIR:-./workspace}:/work
+      # opencode-Konfiguration: auf dem Mac editierbar
+      - ./config/opencode:/home/dev/.config/opencode
+      # Vorlage fuer Claude Code, nur lesend - siehe entrypoint.sh
+      - ./config:/opt/seed:ro
+
+      # --- Gemeinsame Befehle, eine Quelle fuer alle drei Agenten ---------
+      # config/commands/<name>.md wird dorthin eingehaengt, wo jeder Agent
+      # seine getippten Slash-Befehle sucht. Nur lesend: geaendert wird auf
+      # dem Host, nicht im Container.
+      - ./config/commands:/opt/agent-commands:ro
+      - ./config/commands:/home/dev/.config/opencode/commands:ro
+      - ./config/commands:/home/dev/.claude/commands:ro
+      # Dieselben Befehle zusaetzlich als Skills, damit beide Agenten sie
+      # auch von sich aus ziehen koennen. Die SKILL.md verweist jeweils auf
+      # die Datei unter /opt/agent-commands - kein doppelter Inhalt.
+      # opencode liest dieses Verzeichnis ebenfalls (Claude-kompatibel).
+      - ./config/skills:/home/dev/.claude/skills:ro
+      # Anmeldedaten und Sitzungen beider Agenten: jeweils im Volume,
+      # nicht auf dem Mac
+      - opencode-data:/home/dev/.local/share/opencode
+      - claude-data:/home/dev/.claude
+      # Caches, damit Rebuilds/Installs schnell bleiben
+      - sandbox-cache:/home/dev/.cache
+      - sandbox-go:/home/dev/go/pkg
+      - sandbox-npm:/home/dev/.npm-global
+      # gh-CLI-Zustand (eigene Anmeldung per 'gh auth login') bleibt erhalten
+      - gh-config:/home/dev/.config/gh
+      # Optional: SSH-Keys des Macs nur lesend einhaengen (bei Bedarf einkommentieren)
+      # - ${HOME}/.ssh:/home/dev/.ssh:ro
+
+    ports:
+      - "${PORT_A:-127.0.0.1:3000}:3000"
+      - "${PORT_B:-127.0.0.1:5173}:5173"
+      - "${PORT_C:-127.0.0.1:8000}:8000"
+
+    # Ressourcengrenzen
+    cpus: ${SANDBOX_CPUS:-4}
+    mem_limit: ${SANDBOX_MEMORY:-6g}
+    pids_limit: 4096
+
+volumes:
+  opencode-data:
+  claude-data:
+  sandbox-cache:
+  sandbox-go:
+  sandbox-npm:
+  gh-config:

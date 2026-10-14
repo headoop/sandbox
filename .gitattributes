@@ -1,0 +1,15 @@
+# Zeilenenden: Skripte und Konfigurationen, die im Linux-Container laufen,
+# muessen LF behalten - sonst scheitert der Start unter Windows-Checkouts.
+* text=auto eol=lf
+*.sh          text eol=lf
+Dockerfile    text eol=lf
+*.yaml        text eol=lf
+*.yml         text eol=lf
+*.json        text eol=lf
+*.md          text eol=lf
+.env.example  text eol=lf
+
+# Windows-Skripte behalten CRLF
+*.bat         text eol=crlf
+*.cmd         text eol=crlf
+*.ps1         text eol=crlf

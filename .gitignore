@@ -1,0 +1,5 @@
+.env
+workspace/
+config/opencode/auth.json
+.DS_Store
+Thumbs.db

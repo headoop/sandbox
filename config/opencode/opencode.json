@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "mcp": {
+    "github": {
+      "type": "local",
+      "enabled": true,
+      "command": ["github-mcp-server", "stdio"],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "GITHUB_TOOLSETS": "{env:GITHUB_TOOLSETS}",
+        "GITHUB_READ_ONLY": "{env:GITHUB_READ_ONLY}"
+      },
+      "timeout": 20000
+    },
+    "github-remote": {
+      "type": "remote",
+      "enabled": false,
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "X-MCP-Toolsets": "{env:GITHUB_TOOLSETS}"
+      },
+      "timeout": 20000
+    }
+  }
+}
