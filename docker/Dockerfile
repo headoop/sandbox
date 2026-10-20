@@ -5,14 +5,14 @@
 # Der GitHub-MCP-Server wird aus dem Quelltext uebersetzt und als einzelnes
 # Binary uebernommen. So braucht die Sandbox keinen Docker-Socket.
 ARG GITHUB_MCP_VERSION=latest
-FROM golang:1-bookworm AS mcpbuild
+FROM golang:1-trixie AS mcpbuild
 ARG GITHUB_MCP_VERSION
 ENV CGO_ENABLED=0
 RUN go install "github.com/github/github-mcp-server/cmd/github-mcp-server@${GITHUB_MCP_VERSION}" \
  && test -x /go/bin/github-mcp-server
 
 # ---------------------------------------------------------------- Sandbox
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 ARG TZ=Europe/Berlin
 ARG USER_UID=1000
