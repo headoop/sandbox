@@ -291,6 +291,9 @@ noch aktiv - die Werkzeuge sind also da, falls spaeter doch ein Board dazukommt.
 Soll `./sandbox.sh` ohne Argument sofort opencode starten: in der `.env`
 `DEFAULT_ENTRY=opencode` setzen.
 
+Alle Unterbefehle und die Funktionsweise des Skripts sind ausfuehrlich in
+[README-sandbox.sh.md](README-sandbox.sh.md) beschrieben.
+
 ## Projekte
 
 Standardmaessig wird `./workspace` nach `/work` gemountet. Wer seine Projekte
