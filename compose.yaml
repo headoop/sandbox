@@ -10,7 +10,7 @@ services:
         USER_UID: ${SANDBOX_UID:-1000}
         USER_GID: ${SANDBOX_GID:-1000}
         INSTALL_NODE: ${INSTALL_NODE:-true}
-        NODE_MAJOR: ${NODE_MAJOR:-22}
+        NODE_MAJOR: ${NODE_MAJOR:-24}
         INSTALL_PYTHON: ${INSTALL_PYTHON:-true}
         INSTALL_GO: ${INSTALL_GO:-true}
         GO_VERSION: ${GO_VERSION:-}
