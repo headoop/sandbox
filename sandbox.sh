@@ -21,7 +21,7 @@ die()  { printf '\033[1;31mFehler:\033[0m %s\n' "$*" >&2; exit 1; }
 
 check_docker() {
   command -v docker >/dev/null 2>&1 || die "Docker ist nicht installiert oder nicht im PATH."
-  docker info >/dev/null 2>&1 || die "Docker laeuft nicht - bitte Docker Desktop starten."
+  docker info >/dev/null 2>&1 || die "Docker laeuft nicht - bitte den Docker-Daemon bzw. Docker Desktop starten."
   docker compose version >/dev/null 2>&1 || die "Es wird 'docker compose' (Compose v2) benoetigt."
 }
 
@@ -239,7 +239,7 @@ AUTH
     msg "Container entfernt. Projekte und Anmeldedaten bleiben erhalten."
     ;;
   destroy)
-    warn "Das loescht auch die opencode-Anmeldung und alle Caches."
+    warn "Das loescht auch die Anmeldungen von opencode, Claude Code und gh sowie alle Caches."
     read -r -p "Wirklich? [j/N] " a
     case "$a" in j|J|y|Y) docker compose down -v; msg "Alles entfernt." ;; *) msg "Abgebrochen." ;; esac
     ;;
