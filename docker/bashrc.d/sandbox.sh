@@ -3,6 +3,12 @@ export PS1='\[\e[32m\]sandbox\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\$ '
 alias ll='ls -alF --color=auto'
 alias ls='ls --color=auto'
 
+# Starship ersetzt den Prompt oben, wenn das Image mit INSTALL_STARSHIP=true
+# gebaut wurde. Nur in interaktiven Shells, nicht bei "bash -lc".
+if [[ $- == *i* ]] && command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi
+
 if [ -z "${GH_TOKEN:-}" ] && [ -n "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ]; then
   export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
 fi

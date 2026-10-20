@@ -15,6 +15,7 @@ services:
         INSTALL_GO: ${INSTALL_GO:-true}
         GO_VERSION: ${GO_VERSION:-}
         INSTALL_RUST: ${INSTALL_RUST:-false}
+        INSTALL_STARSHIP: ${INSTALL_STARSHIP:-false}
         ENABLE_SUDO: ${ENABLE_SUDO:-true}
         INSTALL_OPENCODE: ${INSTALL_OPENCODE:-true}
         OPENCODE_VERSION: ${OPENCODE_VERSION:-}

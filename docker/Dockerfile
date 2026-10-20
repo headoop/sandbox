@@ -23,6 +23,7 @@ ARG INSTALL_PYTHON=true
 ARG INSTALL_GO=true
 ARG GO_VERSION=
 ARG INSTALL_RUST=false
+ARG INSTALL_STARSHIP=false
 ARG ENABLE_SUDO=true
 ARG INSTALL_OPENCODE=true
 ARG OPENCODE_VERSION=
@@ -63,6 +64,17 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends gh; \
     rm -rf /var/lib/apt/lists/*; \
     gh --version
+
+# ---------------------------------------------------------------- Starship (optional)
+# Prompt aus den Trixie-Paketquellen. Eingeschaltet wird er in
+# /etc/profile.d/zz-sandbox.sh, sobald das Programm vorhanden ist.
+RUN set -eux; \
+    if [ "${INSTALL_STARSHIP}" = "true" ]; then \
+      apt-get update; \
+      apt-get install -y --no-install-recommends starship; \
+      rm -rf /var/lib/apt/lists/*; \
+      starship --version; \
+    fi
 
 # ---------------------------------------------------------------- Node.js
 RUN set -eux; \
