@@ -38,7 +38,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates curl wget gnupg \
       git git-lfs openssh-client \
-      bash-completion less nano vim-tiny tmux \
+      bash-completion less nano vim-tiny neovim tmux \
       procps psmisc htop lsof \
       ripgrep jq unzip zip xz-utils tar file tree \
       build-essential pkg-config make cmake \

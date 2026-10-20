@@ -306,7 +306,7 @@ Sandbox-Effekt. Alles ausserhalb bleibt unerreichbar.
 ## Was im Image steckt
 
 Debian 13 "Trixie" (slim), Go, Node.js 24, Python 3, dazu git, GitHub CLI, ripgrep, fd,
-jq, tmux, build-essential, der GitHub-MCP-Server sowie opencode und
+jq, tmux, Neovim, build-essential, der GitHub-MCP-Server sowie opencode und
 Claude Code. Rust laesst sich mit `INSTALL_RUST=true`
 zuschalten, einzelne Toolchains mit `INSTALL_NODE=false` usw. abschalten.
 Zusaetzliche Debian-Pakete kommen ueber `EXTRA_APT_PACKAGES` ins Image.
