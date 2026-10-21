@@ -1,5 +1,8 @@
 # Entwicklungs-Sandbox mit opencode
 
+## Dies ist eine Kopie des Projekts jamct/sandbox, wie in diesem Artikel auf heise.de vorgestellt:
+[https://www.heise.de/ratgeber/Schluss-mit-Vibe-Coding-Sandbox-fuer-professionelle-KI-Entwicklung-gebaut-11427067.html](https://www.heise.de/ratgeber/Schluss-mit-Vibe-Coding-Sandbox-fuer-professionelle-KI-Entwicklung-gebaut-11427067.html)
+
 Ein abgeschotteter Docker-Container zum Programmieren. Innen laufen zwei
 Coding-Agenten nebeneinander: [opencode](https://opencode.ai) und
 [Claude Code](https://code.claude.com). Der Quellcode liegt weiterhin auf dem
