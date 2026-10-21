@@ -42,12 +42,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       bash-completion less nano vim-tiny neovim tmux \
       procps psmisc htop lsof \
       ripgrep jq unzip zip xz-utils tar file tree eza \
+      fzf bat lazygit \
       build-essential pkg-config make cmake \
       sudo tzdata \
       fd-find \
       ${EXTRA_APT_PACKAGES} \
  && ln -sf /usr/bin/fdfind /usr/local/bin/fd \
- && eza --version \
+ && ln -sf /usr/bin/batcat /usr/local/bin/bat \
+ && rg --version && fzf --version && bat --version && lazygit --version && eza --version \
  && ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime && echo "${TZ}" > /etc/timezone \
  && rm -rf /var/lib/apt/lists/*
 
