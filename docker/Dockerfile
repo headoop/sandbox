@@ -41,12 +41,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       git git-lfs openssh-client \
       bash-completion less nano vim-tiny neovim tmux \
       procps psmisc htop lsof \
-      ripgrep jq unzip zip xz-utils tar file tree \
+      ripgrep jq unzip zip xz-utils tar file tree eza \
       build-essential pkg-config make cmake \
       sudo tzdata \
       fd-find \
       ${EXTRA_APT_PACKAGES} \
  && ln -sf /usr/bin/fdfind /usr/local/bin/fd \
+ && eza --version \
  && ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime && echo "${TZ}" > /etc/timezone \
  && rm -rf /var/lib/apt/lists/*
 

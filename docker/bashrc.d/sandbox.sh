@@ -3,6 +3,12 @@ export PS1='\[\e[32m\]sandbox\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\$ '
 alias ll='ls -alF --color=auto'
 alias ls='ls --color=auto'
 
+# eza ersetzt ls, sobald es im Image vorhanden ist.
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza'
+  alias ll='eza -alF --git'
+fi
+
 # Starship ersetzt den Prompt oben, wenn das Image mit INSTALL_STARSHIP=true
 # gebaut wurde. Nur in interaktiven Shells, nicht bei "bash -lc".
 if [[ $- == *i* ]] && command -v starship >/dev/null 2>&1; then
