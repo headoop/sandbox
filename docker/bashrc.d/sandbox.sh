@@ -15,6 +15,13 @@ if [[ $- == *i* ]] && command -v starship >/dev/null 2>&1; then
   eval "$(starship init bash)"
 fi
 
+# fzf-Tastenkuerzel (Ctrl-R Verlauf, Ctrl-T Dateien, Alt-C Verzeichnis) und
+# **<Tab>-Vervollstaendigung. Die Beispieldateien unter /usr/share/doc fehlen
+# im slim-Image, darum liefert fzf das Skript selbst.
+if [[ $- == *i* ]] && command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
+
 if [ -z "${GH_TOKEN:-}" ] && [ -n "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ]; then
   export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
 fi

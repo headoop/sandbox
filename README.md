@@ -333,6 +333,8 @@ Debian 13 "Trixie" (slim), Go, Node.js 24, Python 3, dazu git, GitHub CLI, ripgr
 fzf, bat, lazygit, jq, tmux, Neovim, build-essential, der GitHub-MCP-Server sowie opencode und
 Claude Code. Rust laesst sich mit `INSTALL_RUST=true`, der
 Starship-Prompt mit `INSTALL_STARSHIP=true` zuschalten, einzelne Toolchains mit `INSTALL_NODE=false` usw. abschalten.
+In interaktiven Shells sind die fzf-Tastenkuerzel aktiv: Ctrl-R durchsucht den
+Verlauf, Ctrl-T fuegt Dateien ein, Alt-C wechselt das Verzeichnis.
 Zusaetzliche Debian-Pakete kommen ueber `EXTRA_APT_PACKAGES` ins Image.
 Nach jeder Aenderung an diesen Schaltern: `./sandbox.sh rebuild`.
 
