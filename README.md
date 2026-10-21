@@ -102,6 +102,27 @@ Nötige Rechte:
 
 Ohne `project` bzw. das Projects-Recht bleiben die Board-Werkzeuge stumm.
 
+### Git-Identität
+
+Name und E-Mail für Commits im Container kommen ebenfalls aus der `.env`:
+
+```
+GIT_USER_NAME=Max Mustermann
+GIT_USER_EMAIL=12345+max@users.noreply.github.com
+```
+
+`docker/entrypoint.sh` trägt sie beim Start per `git config --global` ein,
+leere Werte werden übersprungen. Zu beachten:
+
+* `./sandbox.sh restart` liest die `.env` **nicht** neu ein, der Container
+  behält seine alten Umgebungsvariablen. Nach einer Änderung stattdessen
+  `./sandbox.sh start` aufrufen: Compose erkennt die geänderte Konfiguration
+  und erzeugt den Container neu.
+* Ein später geleerter Wert entfernt den bisherigen Eintrag nicht von selbst.
+  Die `~/.gitconfig` liegt im Container und verschwindet erst, wenn er neu
+  erzeugt wird, also ebenfalls über `./sandbox.sh start` (oder `down` und
+  danach `start`), nicht über `restart`.
+
 ### Werkzeuggruppen
 
 `GITHUB_TOOLSETS` in der `.env` steuert, was der MCP-Server anbietet. Voreinstellung:

@@ -73,9 +73,9 @@
 
 | Befehl | Wirkung |
 |---|---|
-| `start` / `up` | Startet den Container im Hintergrund. |
+| `start` / `up` | Startet den Container im Hintergrund. Hat sich die `.env` geändert, erzeugt Compose den Container dabei neu. |
 | `stop` | Hält den Container an. |
-| `restart` | Startet den Container neu. |
+| `restart` | Startet den bestehenden Container neu. Änderungen an der `.env` (z. B. `GIT_USER_NAME`/`GIT_USER_EMAIL`) werden dabei **nicht** übernommen, dafür `start` verwenden. |
 | `logs` | Zeigt die Containerausgaben fortlaufend an (`-f`). |
 | `down` | Entfernt den Container. Projekte und Anmeldedaten in den Volumes bleiben erhalten. |
 | `destroy` | Entfernt den Container **und die Volumes** (`down -v`), vorher kommt eine Rückfrage `[j/N]`. Dabei gehen die Anmeldungen von opencode, Claude Code und gh sowie alle Caches verloren. |
