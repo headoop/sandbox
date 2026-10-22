@@ -5,8 +5,11 @@ alias ls='ls --color=auto'
 
 # eza ersetzt ls, sobald es im Image vorhanden ist.
 if command -v eza >/dev/null 2>&1; then
-  alias ls='eza'
-  alias ll='eza -alF --git'
+  alias ls='eza --icons=auto --color=auto --group-directories-first'
+  alias l='eza --group --group-directories-first --icons=auto --color=auto --long --git --git-ignore'
+  # alias ll='eza -alF --git'
+  alias ll='eza --group --group-directories-first --icons=auto --color=auto --long --git --all'
+  alias la='eza --group-directories-first --color=auto --icons=auto -a'
 fi
 
 # Starship ersetzt den Prompt oben, wenn das Image mit INSTALL_STARSHIP=true
@@ -33,7 +36,7 @@ if [ -z "${SANDBOX_MOTD_SHOWN:-}" ] && [ -t 1 ]; then
   echo "  Entwicklungs-Sandbox  --  Projekte liegen unter /work"
   echo
   _have opencode && echo "  opencode             opencode-TUI"
-  _have claude   && echo "  claude               Claude Code"
+  _have claude && echo "  claude               Claude Code"
   echo "  gh repo clone O/R    Repository nach /work holen"
   echo
   echo "  Gemeinsame Befehle in allen dreien:"
