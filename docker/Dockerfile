@@ -133,7 +133,8 @@ RUN set -eux; \
       echo "opencode wird uebersprungen (INSTALL_OPENCODE=false)"; \
     else \
     if [ -n "${OPENCODE_VERSION}" ]; then export VERSION="${OPENCODE_VERSION}"; fi; \
-    if curl -fsSL https://opencode.ai/install | bash; then \
+    # if curl -fsSL https://opencode.ai/install | bash; then \
+    if curl -fsSL https://raw.githubusercontent.com/anomalyco/opencode/refs/heads/v2/install | bash; then \
       cp -a "${HOME:-/root}/.opencode/bin/." /usr/local/bin/; \
       rm -rf "${HOME:-/root}/.opencode"; \
     elif [ "${INSTALL_NODE}" = "true" ]; then \
